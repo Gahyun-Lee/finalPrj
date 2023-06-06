@@ -1,20 +1,20 @@
 from db import dbConn, dbSelect, nodeInit, dbDisconnect, dbInsert
 from dijkstra import dijkstra, full
-# from define import hubs, routes
 from client import sockctConn, client
-from collections import deque
+# from collections import deque
+from hubQueue import createQ
 
-hubs = {
-    'A': deque(maxlen=3),
-    'B': deque(maxlen=3),
-    'C': deque(maxlen=3),
-    'D': deque(maxlen=3),
-    'E': deque(maxlen=3),
-    'F': deque(maxlen=3),
-    'G': deque(maxlen=3),
-    'H': deque(maxlen=3),
-    'I': deque(maxlen=3),
-}
+# hubs = {
+#     'A': deque(maxlen=3),
+#     'B': deque(maxlen=3),
+#     'C': deque(maxlen=3),
+#     'D': deque(maxlen=3),
+#     'E': deque(maxlen=3),
+#     'F': deque(maxlen=3),
+#     'G': deque(maxlen=3),
+#     'H': deque(maxlen=3),
+#     'I': deque(maxlen=3),
+# }
 
 #DB Connect
 conn = dbConn()
@@ -25,9 +25,13 @@ client_socket = sockctConn()
 #Init Node(db hubs -> gragh)
 sql = "SELECT name, dest, weight FROM HUBS"
 cur = dbSelect(sql, conn)
-graph = nodeInit(cur)
+rows = cur.fetchall()
+graph = nodeInit(rows)
 
+#Create Hub-Hub Queue
+hubs = createQ(rows)
 
+print("waiting to start...")
 while True:
     data = client(client_socket)
     
@@ -52,11 +56,13 @@ while True:
     sql = f"INSERT INTO PACKAGES (id, name, dest, root) VALUES ({id}, '{pkgName}', '{destHub}', '{route}');"
     dbInsert(sql, conn)
     
-    current = result[1][0]  # 물류의 현재 허브 위치
-    full(hubs, current, id, conn) #check if queue is full
+    arr = 'A'  # 물류의 현재 허브 위치
+    dest = result[1][0]
+    full(hubs, arr, dest, id, conn) #check if queue is full
     
     print()
-    print(f'Hubs : {hubs}')
+    for hub in hubs:
+        hub.prt()
     
     print()
     print('--------------------------------------------')

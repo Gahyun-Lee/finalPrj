@@ -39,9 +39,8 @@ def resultPrt(cur):
         print(row)
         row = cur.fetchone()
         
-def nodeInit(cur):
+def nodeInit(rows):
     dic = dict()
-    rows = cur.fetchall()
     for row in rows:
         if not row[0] in dic:
             dic[row[0]] = dict()

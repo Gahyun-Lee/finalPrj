@@ -22,8 +22,10 @@ def dijkstra(graph, final, hubs):
             continue
 
         for new_destination, new_distance in graph[current_destination].items():
-            distance = current_distance + new_distance + \
-                len(hubs[new_destination])*WEIGHT  # 해당 노드를 거쳐 갈 때 거리
+            distance = current_distance + new_distance
+            for hub in hubs:
+                if hub.check(current_destination, new_destination):
+                    distance += hub.weight() # 해당 노드를 거쳐 갈 때 거리
 
             if distance < distances[new_destination]:  # 알고 있는 거리 보다 작으면 갱신
                 distances[new_destination] = distance
@@ -43,19 +45,21 @@ def dijkstra(graph, final, hubs):
 
     return result
 
-def full(hubs, current, id, conn):
-
-    queue = hubs[current]  # 현재 물류가 위치한 허브의 큐
+def full(hubs, arr, dest, id, conn):
+    print(f"arr:{arr}, dest:{dest}")
+    for h in hubs:
+        if h.check(arr, dest):
+            hub = h  # 현재 물류가 위치한 허브의 큐
     # print(f'{current} Hubs Queue : {queue}')
 
-    queue.append(id)
+    hub.que.append(id)
 
     # print(f'{current} Hubs Queue : {queue}')
 
-    if len(queue) == 3:  # 허브 큐가 가득찼을때
+    if len(hub.que) == 5:  # 허브 큐가 가득찼을때
 
-        for i in range(3):  # 허브 큐에 차있는 개수만큼 반복
-            pop = queue.popleft()  # 허브 큐에 차있는 물류 꺼내기
+        while hub.que:  # 허브 큐에 차있는 개수만큼 반복
+            pop = hub.que.popleft()  # 허브 큐에 차있는 물류 꺼내기
 
             print(f'POP : {pop}')
             
@@ -65,14 +69,14 @@ def full(hubs, current, id, conn):
             route = cur.fetchone()[0].split('-')
             
             print(f'pop routes  :{route}')
+            print(f'dest"{dest} route[-1]:{route[-1]}')
+            if dest == route[-1]:
+                continue
+            
+            index = route.index(dest) + 1  # 꺼낸 물류의 경로 중 다음 경로 인덱스
+            
+            print(f'next : {route[index]}')
 
-            index = route.index(current) + 1  # 꺼낸 물류의 경로 중 다음 경로 인덱스
-
-            print(f'next routes index : {index}')
-
-            if index < len(route):  # index가 존재하는 경로이면
-                print(f'next : {route[index]}')
-                next = route[index]
-                full(hubs, next, pop, conn)
+            full(hubs, dest, route[index], pop, conn)
 
             print("------------")
