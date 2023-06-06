@@ -42,9 +42,6 @@ while True:
     
     #dijkstra with received data
     result = dijkstra(graph, destHub, hubs) #[weight, [route]]
-    # route = result[1] #optimization route
-    
-    # routes[pkgName] = result[1]
     
     print(f'Result : {result}')
     # print(f'Routes : {routes}')

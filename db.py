@@ -25,12 +25,6 @@ def dbSelect(sql, conn):
     # cur.execute("SELECT id, name, arrive, dest, root FROM PACKAGES")
     cur = conn.cursor()
     cur.execute(sql)
-    # row = cur.fetchone()
-
-    # while row:
-    #     print("id : " + str(row[0]) + ", name : " + str(row[1]) + ", arrive : " + str(row[2]) + ", dest : " + str(row[3]) + ", root : " + str(row[4]))
-    #     row = cur.fetchone()
-    # print()
     
     return cur
 
@@ -58,9 +52,6 @@ def nodeInit(cur):
         dic[row[0]][row[1]] = row[2]
         dic[row[1]][row[0]] = row[2]
     
-    # print(dic)
-    # print()
-    
     print("===========gragh===========")
     for k in dic.keys():
         print(f"{k} : {dic[k]}")
@@ -68,18 +59,3 @@ def nodeInit(cur):
         
     return dic
     
-
-# conn = dbConn()
-
-# sql = "INSERT INTO PACKAGES (id, name, arrive, dest) VALUES (1124, 'jjung', 'A', 'I');"
-# dbInsert(sql, conn)
-# sql = "SELECT id, name, arrive, dest, root FROM PACKAGES"
-# dbSelect(sql, conn)
-
-# Init Node(db hubs -> gragh)
-# sql = "SELECT name, dest, weight FROM HUBS"
-# cur = dbSelect(sql, conn)
-# graph = nodeInit(cur)
-
-# dbDisconnect(conn)
-
