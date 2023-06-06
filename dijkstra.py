@@ -10,7 +10,7 @@ def dijkstra(graph, final, hubs):
     distances['A'] = 0  # 시작 값은 0이어야 함
     queue = []
     routes = {'A': [], 'B': [], 'C': [], 'D': [],
-              'E': [], 'F': [], 'G': [], 'H': [], 'I': []}  # 최적 루트 경로 저장
+            'E': [], 'F': [], 'G': [], 'H': [], 'I': []}  # 최적 루트 경로 저장
     heapq.heappush(queue, [distances['A'], 'A'])  # 시작 노드부터 탐색 시작 하기 위함.
 
     while queue:  # queue에 남아 있는 노드가 없으면 끝
