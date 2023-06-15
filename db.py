@@ -28,6 +28,47 @@ def dbSelect(sql, conn):
     
     return cur
 
+def hubSelect(conn, name, dest):
+    print(name, dest)
+    sql = f"SELECT que FROM HUBS WHERE name='{name}' AND dest='{dest}';"
+    cur = conn.cursor()
+    cur.execute(sql)
+    # print(type(cur.fetchone()[0]))
+    # if type(cur.fetchone()[0]) == "<class 'NoneType'>":
+    #     return []
+    print(cur.rowcount)
+    print(type(cur.rowcount))
+    if cur.rowcount == 0:
+        return []
+
+    que = cur.fetchone()[0]
+    
+    if not que:
+        return []
+    
+    que = que.split('-')
+    hq = list()
+    for q in que:
+        hq.append(int(q))
+        
+    print("hubSelect")
+    print(q)
+        
+    return hq
+
+# def hubInsert(conn, name, dest, que):
+#     sql = f"INSERT INTO FROM HUBS (que) VALUES ({que}) WHERE name='{name}' AND dest='{dest}'"
+#     cur = conn.cursor()
+#     cur.execute(sql)
+#     conn.commit()
+    
+def hubUpdate(conn, name, dest, que):
+    sql = f"UPDATE HUBS SET que = '{que}' WHERE name='{name}' AND dest='{dest}';"
+    cur = conn.cursor()
+    cur.execute(sql)
+    conn.commit()
+    
+
 def dbDisconnect(conn):
     conn.close()
 
