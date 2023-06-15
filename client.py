@@ -16,7 +16,5 @@ def client(client_socket):
     data = client_socket.recv(1024)
     
     received = pickle.loads(data)
-
-    print("recive : ", received)
     
     return received
