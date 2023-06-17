@@ -31,26 +31,26 @@ def servoSet():
     return servo   
 
 def servo1(servo1):
-    servo1.ChangeDutyCycle(9)
-    sleep(13)
+    servo1.ChangeDutyCycle(7)
+    sleep(16)
     servo1.ChangeDutyCycle(12)
     sleep(2)
     
 def servo2(servo2):
     servo2.ChangeDutyCycle(11)
-    sleep(11)
+    sleep(13)
     servo2.ChangeDutyCycle(6)
     sleep(2)
 
 def servo3(servo3):
-    servo3.ChangeDutyCycle(6)
-    sleep(7)
+    servo3.ChangeDutyCycle(8)
+    sleep(10)
     servo3.ChangeDutyCycle(3)
     sleep(2)
 
 def servo4(servo4):
     servo4.ChangeDutyCycle(3)
-    sleep(5)
+    sleep(8)
     servo4.ChangeDutyCycle(7)
     sleep(2)
 

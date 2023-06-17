@@ -29,15 +29,14 @@ def dbSelect(sql, conn):
     return cur
 
 def hubSelect(conn, name, dest):
-    print(name, dest)
     sql = f"SELECT que FROM HUBS WHERE name='{name}' AND dest='{dest}';"
     cur = conn.cursor()
     cur.execute(sql)
     # print(type(cur.fetchone()[0]))
     # if type(cur.fetchone()[0]) == "<class 'NoneType'>":
     #     return []
-    print(cur.rowcount)
-    print(type(cur.rowcount))
+    # print(cur.rowcount)
+    # print(type(cur.rowcount))
     if cur.rowcount == 0:
         return []
 
@@ -51,8 +50,8 @@ def hubSelect(conn, name, dest):
     for q in que:
         hq.append(int(q))
         
-    print("hubSelect")
-    print(q)
+    # print("hubSelect")
+    # print(q)
         
     return hq
 

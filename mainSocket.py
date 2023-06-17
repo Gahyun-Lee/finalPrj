@@ -31,6 +31,14 @@ while True:
     cur = dbSelect(sql, conn)
     rows = cur.fetchall()
     
+    if data[0] == 'error' and data[3] == 1:
+        print("servo4")
+        # servo4(servo[3])
+        continue
+    
+    if data[0] == 'error' and data[3] == 0:
+        continue
+    
     same = False
     for row in rows:
         print(row[0])
@@ -43,7 +51,7 @@ while True:
     
     if data[3] == 1:
         print("servo4")
-        servo4(servo[3])
+        # servo4(servo[3])
         continue
     
     print(f"received data : {data}")
@@ -61,13 +69,13 @@ while True:
     
     if result[1][0] == 'B':
         print("servo1")
-        servo1(servo[0])
+        # servo1(servo[0])
     elif result[1][0] == 'C':
         print("servo2")
-        servo2(servo[1])
+        # servo2(servo[1])
     elif result[1][0] == 'D':
         print("servo3")
-        servo3(servo[2])
+        # servo3(servo[2])
     
     #save packag information - id, name, dest, route
     sql = f"INSERT INTO PACKAGES (id, name, dest, root) VALUES ({id}, '{pkgName}', '{destHub}', '{route}');"
